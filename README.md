@@ -4,4 +4,5 @@ A new Flutter project.
 
 ## Getting Started
 
-Ecommerce Application Usinf Flutter
+Ecommerce Application Using Flutter
+
