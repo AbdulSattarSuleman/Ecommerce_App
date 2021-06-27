@@ -2,12 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
+import 'package:hackathonscreen/slider.dart';
+
 void main() {
   runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Ecommerce App',
       theme: ThemeData(
         primaryColor: Colors.white,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: MyApp()));
 }
@@ -18,21 +21,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // @override
-  // void initState() {
-  //   var index = 0;
-  //   Timer.periodic(Duration(seconds: 1), (Timer timer) {
-  //     // if (!_isRunning) {
-  //     //   timer.cancel();
-  //     // }
-  //     _addItem();
-  //   });
-  //   super.initState();
-  // }
-
   @override
   Widget build(BuildContext context) {
-    var greeting = '12312';
     Widget _firstContainer() {
       return Padding(
         padding: const EdgeInsets.only(left: 8.0, right: 8, top: 8),
@@ -71,7 +61,7 @@ class _MyAppState extends State<MyApp> {
               SizedBox(
                 height: 5,
               ),
-              _Reviews(),
+              reviews(),
               SizedBox(
                 height: 10,
               ),
@@ -102,16 +92,64 @@ class _MyAppState extends State<MyApp> {
               ))
         ],
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.purple,
+        onPressed: () {},
+        child: Icon((Icons.search)),
+        elevation: 2.0,
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.white,
+        shape: CircularNotchedRectangle(),
+        notchMargin: 1.0,
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.home,
+                  color: Colors.purple,
+                  size: 30,
+                )),
+            IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.favorite,
+                  color: Colors.grey,
+                  size: 30,
+                )),
+            IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.add_shopping_cart_outlined,
+                  color: Colors.grey,
+                  size: 30,
+                )),
+            IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.account_circle,
+                  color: Colors.grey,
+                  size: 30,
+                )),
+          ],
+        ),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             _containerTopText('Items', 'View More'),
 
-            _firstContainer(),
+            // _firstContainer(),
+            // CustomSlider(),
+            Dashboard(),
 
             // customSlider(),
             _containerTopText('More Categories', ''),
-            SizedBox(height: 10),
+            SizedBox(height: 5),
             _secondContainer(),
             _containerTopText('Popular Items', 'View More'),
             // _firstContainer(),
@@ -126,7 +164,7 @@ class _MyAppState extends State<MyApp> {
 
 Widget _containerTopText(item, more) {
   return Padding(
-    padding: const EdgeInsets.only(left: 8.0, right: 8, top: 8),
+    padding: const EdgeInsets.only(left: 8.0, right: 8, ),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -155,21 +193,6 @@ Widget _containerTopText(item, more) {
 }
 
 Widget _secondContainer() {
-  // class sliderContent{
-  //   var sliderTitle;
-  //   var stockItems;
-  //   var myIcon;
-  //   sliderContent(var sliderTitle, var stockItems, var myIcon){
-  //     this.sliderTitle = sliderTitle;
-  //     this.stockItems = stockItems;
-  //     this.myIcon = myIcon;
-
-  //   }
-  // }
-
-  // List<sliderContent> _slider = [
-
-  // ];
   List<dynamic> sliderTitle = [
     'Clothes',
     'Electronics',
@@ -227,7 +250,7 @@ Widget _secondContainer() {
                 child: Card(
                   child: Row(
                     children: [
-                      // SizedBox()
+                      // SizedBox(height: 5,),
                       Center(
                         child: myIcon[index],
                       ),
@@ -238,6 +261,9 @@ Widget _secondContainer() {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          SizedBox(
+                            height: 6,
+                          ),
                           Text(
                             sliderTitle[index],
                             style: TextStyle(
@@ -297,6 +323,7 @@ Widget _thirdContainer() {
     padding: const EdgeInsets.only(left: 8.0, right: 8),
     child: GridView.builder(
         itemCount: productTitle.length,
+        physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
@@ -341,7 +368,7 @@ Widget _thirdContainer() {
                             fontWeight: FontWeight.w600),
                       ),
                     ),
-                    _Reviews(),
+                    reviews(),
                   ],
                 ),
               ),
@@ -351,11 +378,12 @@ Widget _thirdContainer() {
   );
 }
 
-Widget _Reviews() {
+Widget reviews() {
   return Padding(
-    padding: const EdgeInsets.only(left: 8.0),
+    padding: const EdgeInsets.only(top:8, left: 8.0),
     child: Row(
       children: [
+        SizedBox(height: 5),
         Icon(
           Icons.star,
           size: 10,
@@ -432,12 +460,12 @@ class SliderImage {
 }
 
 List<SliderImage> images = [
-  new SliderImage('assets/download.jpg', 'Iphone 12', _Reviews),
-  new SliderImage('assets/iphone.jpg', 'Note 20 Ultra', _Reviews),
-  new SliderImage('assets/macbook-pro.jpg', 'Macbook Air', _Reviews),
-  new SliderImage('assets/macbook.jpg', 'Macbook Pro', _Reviews),
-  new SliderImage('assets/gaming-pc.jpg', 'Gaming PC', _Reviews),
-  new SliderImage('assets/keyboard.jpg', 'Backlit', _Reviews),
-  new SliderImage('assets/Mercedes.jpg', 'Mercedes', _Reviews),
-  new SliderImage('assets/car.jpg', 'Mutton', _Reviews),
+  new SliderImage('assets/download.jpg', 'Iphone 12', reviews),
+  new SliderImage('assets/iphone.jpg', 'Note 20 Ultra', reviews),
+  new SliderImage('assets/macbook-pro.jpg', 'Macbook Air', reviews),
+  new SliderImage('assets/macbook.jpg', 'Macbook Pro', reviews),
+  new SliderImage('assets/gaming-pc.jpg', 'Gaming PC', reviews),
+  new SliderImage('assets/keyboard.jpg', 'Backlit', reviews),
+  new SliderImage('assets/Mercedes.jpg', 'Mercedes', reviews),
+  new SliderImage('assets/car.jpg', 'Mutton', reviews),
 ];
